@@ -11,14 +11,14 @@ import (
 )
 
 type handle struct {
-	host    string
-	port    string
+	host string
+	port string
 	path string
 }
 
 type Service struct {
 	hello *handle
-	bey  *handle
+	bey   *handle
 }
 
 func NewMultipleHostsReverseProxy1(targets []*url.URL) *httputil.ReverseProxy {
@@ -40,9 +40,8 @@ func (this *Service) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			{
 				Scheme: "http",
 				Host:   "localhost:9091",
-				Path: "/hello",
+				Path:   "/hello",
 			},
-
 		})
 		proxy.ServeHTTP(w, r)
 	} else if strings.Contains(r.RequestURI, "api/bey") {
@@ -52,9 +51,8 @@ func (this *Service) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			{
 				Scheme: "http",
 				Host:   "localhost:9092",
-				Path: "/bey",
+				Path:   "/bey",
 			},
-
 		})
 		proxy.ServeHTTP(w, r)
 
@@ -67,14 +65,11 @@ func (this *Service) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	//proxy.ServeHTTP(w, r)
 }
 
-
-
 func startServer() {
 	// 注册被代理的服务器 (host， port)
 	service := &Service{
 		hello: &handle{host: "127.0.0.1", port: "9091"},
-		bey: &handle{host: "127.0.0.1", port: "9092", path: "/bey"},
-
+		bey:   &handle{host: "127.0.0.1", port: "9092", path: "/bey"},
 	}
 
 	err := http.ListenAndServe(":8888", service)
@@ -84,6 +79,6 @@ func startServer() {
 }
 
 func main() {
-
+	fmt.Println("test")
 	startServer()
 }
